@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="5dp" >
+    
+    <ImageView
+        android:id="@+id/imageViewListAllStores"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:src="@drawable/caco_logo"
+        android:contentDescription="desc"
+        android:padding="3dp"
+        android:background="@drawable/image_border"
+        android:scaleType="fitXY"
+        android:paddingRight="10dp" />
+
+    <TextView
+        android:id="@+id/textViewAllStoresName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/imageViewListAllStores"
+        android:paddingBottom="5dp"
+        android:text="Mr Kitsch"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewAllStoresAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewAllStoresName"
+        android:layout_below="@+id/textViewAllStoresName"
+        android:text="Rua Jacy Teixeira de Camargo, 750, 13087-460, Campinas-SP"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+    
+    <ImageButton
+        android:id="@+id/contact_type"
+        android:src="@drawable/caco"
+		android:background="@null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="@+id/textViewAllStoresName"
+        android:layout_alignTop="@+id/textViewAllStoresName"
+        android:layout_alignParentRight="true"
+        android:text="txt"
+        android:textSize="16sp" />
+    
+</RelativeLayout>

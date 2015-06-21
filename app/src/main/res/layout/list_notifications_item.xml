@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="5dp" >
+    
+    <ImageView
+        android:id="@+id/imageViewNotificationImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/caco_logo"
+        android:contentDescription="desc"
+        android:padding="3dp"
+        android:background="@drawable/image_border"
+        android:scaleType="fitXY"
+        android:paddingRight="10dp" />
+
+    <TextView
+        android:id="@+id/textViewNotificationTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/imageViewNotificationImage"
+        android:paddingBottom="3dp"
+        android:text="Rafael Adegas"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewNotificationsMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewNotificationTitle"
+        android:layout_below="@+id/textViewNotificationTitle"
+        android:text="indicou a loja Mr. Kistch para você."
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+    
+</RelativeLayout>

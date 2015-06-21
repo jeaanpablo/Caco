@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="5dp" >
+    
+    <ImageView
+        android:id="@+id/imageViewListFidelityCardGeolocationStore"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/caco_logo"
+        android:contentDescription="desc"
+        android:padding="3dp"
+        android:background="@drawable/image_border"
+        android:scaleType="fitXY"
+        android:paddingRight="10dp" />
+
+    <TextView
+        android:id="@+id/textViewListFidelyCardGeolocationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/imageViewListFidelityCardGeolocationStore"
+        android:paddingBottom="1dp"
+        android:text="Mr Kitsch"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewListFidelyCardGeolocationPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewListFidelyCardGeolocationName"
+        android:layout_below="@+id/textViewListFidelyCardGeolocationName"
+		android:paddingBottom="3dp"
+        android:text="5000 pontos"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+    <TextView
+        android:id="@+id/textViewListFidelyCardDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewListFidelyCardGeolocationPoints"
+        android:layout_below="@+id/textViewListFidelyCardGeolocationPoints"
+        android:text="75 km"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+    
+    <ImageView
+        android:id="@+id/contact_type"
+        android:src="@drawable/ic_action_next_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="@+id/textViewListFidelyCardGeolocationName"
+        android:layout_alignTop="@+id/textViewListFidelyCardGeolocationName"
+        android:layout_alignParentRight="true"
+        android:text="txt"
+        android:textSize="16sp" />
+</RelativeLayout>
