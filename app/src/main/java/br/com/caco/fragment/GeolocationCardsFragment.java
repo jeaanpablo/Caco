@@ -54,7 +54,7 @@ public class GeolocationCardsFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-		((FidelityCardActivity) getActivity()).setTitle("Mais Próximos");
+		((FidelityCardActivity) getActivity()).setTitle("Mais PrÃ³ximos");
 		super.onResume();
 	}
 }
