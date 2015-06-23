@@ -1,7 +1,8 @@
 package br.com.caco.model;
 
 public class User {
-	
+
+    private Integer id;
 	private String firstName;
     private String lastName;
     private String login;
@@ -11,6 +12,32 @@ public class User {
 	private String birthdate;
 	private String gender;
     private String email;
+    private String token;
+    private String permission;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
 
     public String getEmail() {
         return email;

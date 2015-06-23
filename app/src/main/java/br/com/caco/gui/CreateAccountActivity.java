@@ -2,48 +2,36 @@ package br.com.caco.gui;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.zip.GZIPInputStream;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import br.com.caco.R;
-import br.com.caco.br.com.caco.util.Mask;
-import br.com.caco.br.com.caco.util.Util;
+import br.com.caco.util.Mask;
+import br.com.caco.util.Util;
+import br.com.caco.util.Validation;
 import br.com.caco.model.User;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
+import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -67,6 +55,22 @@ public class CreateAccountActivity extends Activity{
 		getActionBar().setTitle(R.string.login_criarconta);
 		
 		final EditText editEmail = (EditText) findViewById(R.id.editTextCreateAccountEmail);
+        editEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Validation.isEmailAddress(editEmail, true);
+            }
+        });
         final EditText editCpf = (EditText) findViewById(R.id.editTextCreateAccountCpf);
         final EditText editAniversario = (EditText) findViewById(R.id.editTextCreateAccountAniversario);
 		Button btnCriar = (Button) findViewById(R.id.buttonCreateAccountEntrar);
@@ -95,7 +99,23 @@ public class CreateAccountActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 
-				EditText editNome = (EditText) findViewById(R.id.editTextCreateAccountNome);
+				final EditText editNome = (EditText) findViewById(R.id.editTextCreateAccountNome);
+                editNome.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        Validation.hasText(editNome);
+                    }
+                });
 				EditText editCelular = (EditText) findViewById(R.id.editTextCreateAccountCelular);
 				EditText editSenha = (EditText) findViewById(R.id.editTextCreateAccountSenha);
                 EditText editLogin = (EditText) findViewById(R.id.editTextCreateAccountLogin);
@@ -116,10 +136,13 @@ public class CreateAccountActivity extends Activity{
 				user.setGender(gender);
 				user.setBirthdate(dateStringToMillis(editAniversario.getText().toString()));
                 user.setLogin(editLogin.getText().toString());
-                user.setCpf(Long.parseLong(editCpf.getText().toString()));
+                user.setPassword(editSenha.getText().toString());
+                String cpf = editCpf.getText().toString();
+
+                user.setCpf(Long.parseLong(cpf.replaceAll("[\\D]", "")));
 
 
-
+                        createAccount(v.getContext(), user);
 						Intent itMain = new Intent (getApplicationContext(), FidelityCardActivity.class);
 						startActivity(itMain);
 	
@@ -129,16 +152,26 @@ public class CreateAccountActivity extends Activity{
 		});
 	}
 
-    public void postData(User user) {
+    public User postData(User user) {
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://192.168.0.7:8080/Caco-webservice/addUser");
+        HttpPost httppost = new HttpPost("http://192.168.0.15:8080/Caco-webservice/addUser");
 
         try {
             // Add your data
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("id", "12345"));
-            nameValuePairs.add(new BasicNameValuePair("stringdata", "Hi"));
+            nameValuePairs.add(new BasicNameValuePair("first_name", user.getFirstName()));
+            nameValuePairs.add(new BasicNameValuePair("last_name", user.getLastName()));
+            nameValuePairs.add(new BasicNameValuePair("cpf", ""+user.getCpf()));
+            nameValuePairs.add(new BasicNameValuePair("cpf", ""+user.getCpf()));
+            nameValuePairs.add(new BasicNameValuePair("birth_date", user.getBirthdate()));
+            nameValuePairs.add(new BasicNameValuePair("gender", user.getGender()));
+            nameValuePairs.add(new BasicNameValuePair("email", user.getEmail()));
+            nameValuePairs.add(new BasicNameValuePair("login", user.getLogin()));
+            nameValuePairs.add(new BasicNameValuePair("password", user.getPassword()));
+            nameValuePairs.add(new BasicNameValuePair("cellphone", ""+user.getCellphone()));
+
+
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             // Execute HTTP Post Request
@@ -149,8 +182,11 @@ public class CreateAccountActivity extends Activity{
             for (String line = null; (line = reader.readLine()) != null;) {
                 builder.append(line).append("\n");
             }
-            JSONTokener tokener = new JSONTokener(builder.toString());
-            JSONArray finalResult = new JSONArray(tokener);
+            JSONObject jsonObject = new JSONObject(builder.toString());
+
+            user.setId(jsonObject.optInt("id"));
+            user.setToken(jsonObject.optString("token"));
+            user.setPermission(jsonObject.optString("permission"));
 
         } catch (ClientProtocolException e) {
             // TODO Auto-generated catch block
@@ -159,6 +195,8 @@ public class CreateAccountActivity extends Activity{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        return user;
     }
 
     public String getEmail (Context ctx, String mail)
@@ -217,5 +255,45 @@ public class CreateAccountActivity extends Activity{
 
         return timeInMillis;
     }
+
+
+    public void createAccount(final Context context, final User user)
+    {
+        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+
+
+            public ProgressDialog mProgressDialog;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                mProgressDialog = new ProgressDialog(context);
+                mProgressDialog.setMessage("Por favor espere...");
+                mProgressDialog.setCancelable(false);
+                mProgressDialog.show();
+            }
+
+            @Override
+            protected Void doInBackground(Void... params) {
+
+                postData(user);
+
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result) {
+                super.onPostExecute(result);
+
+                mProgressDialog.dismiss();
+
+
+                }
+
+        }.execute();
+    }
+
 
 }

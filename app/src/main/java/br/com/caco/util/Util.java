@@ -1,4 +1,4 @@
-package br.com.caco.br.com.caco.util;
+package br.com.caco.util;
 
 /**
  * Created by Jean Pablo Bosso on 21/06/2015.
