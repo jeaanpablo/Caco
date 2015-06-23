@@ -37,7 +37,6 @@ public class LoginActivity extends FragmentActivity{
 				
 				Intent it = new Intent(getApplicationContext(), CreateAccountActivity.class);
 				startActivity(it);
-				
 			}
 		} );
 		

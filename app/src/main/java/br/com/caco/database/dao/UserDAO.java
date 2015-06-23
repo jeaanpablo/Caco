@@ -14,7 +14,7 @@ import br.com.caco.model.User;
 /**
  * Created by Jean Pablo Bosso on 23/06/2015.
  */
-public class UserDAO {
+public class  UserDAO {
 
 
     private UserData db;

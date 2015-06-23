@@ -14,8 +14,8 @@ public class Validation {
     private static final String PHONE_REGEX = "\\d{3}-\\d{7}";
 
     // Error Messages
-    private static final String REQUIRED_MSG = "required";
-    private static final String EMAIL_MSG = "invalid email";
+    private static final String REQUIRED_MSG = "Campo obrigatório";
+    private static final String EMAIL_MSG = "E-mail invalido";
     private static final String PHONE_MSG = "###-#######";
 
     // call this method when you need to check email validation

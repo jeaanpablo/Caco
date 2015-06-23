@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.caco.R;
+import br.com.caco.database.dao.UserDAO;
 import br.com.caco.util.Mask;
 import br.com.caco.util.Util;
 import br.com.caco.util.Validation;
@@ -39,6 +40,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 public class CreateAccountActivity extends Activity{
 	String gender;
@@ -55,22 +57,6 @@ public class CreateAccountActivity extends Activity{
 		getActionBar().setTitle(R.string.login_criarconta);
 		
 		final EditText editEmail = (EditText) findViewById(R.id.editTextCreateAccountEmail);
-        editEmail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Validation.isEmailAddress(editEmail, true);
-            }
-        });
         final EditText editCpf = (EditText) findViewById(R.id.editTextCreateAccountCpf);
         final EditText editAniversario = (EditText) findViewById(R.id.editTextCreateAccountAniversario);
 		Button btnCriar = (Button) findViewById(R.id.buttonCreateAccountEntrar);
@@ -98,55 +84,48 @@ public class CreateAccountActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-
+                boolean nome, celular, senha, login, email, cpfV, aniversario;
 				final EditText editNome = (EditText) findViewById(R.id.editTextCreateAccountNome);
-                editNome.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        Validation.hasText(editNome);
-                    }
-                });
 				EditText editCelular = (EditText) findViewById(R.id.editTextCreateAccountCelular);
 				EditText editSenha = (EditText) findViewById(R.id.editTextCreateAccountSenha);
                 EditText editLogin = (EditText) findViewById(R.id.editTextCreateAccountLogin);
 
-				User user = new User();
-                String name = editNome.getText().toString();
+                nome = Validation.hasText(editNome);
+                senha = Validation.hasText(editSenha);
+                login = Validation.hasText(editLogin);
+                email = Validation.isEmailAddress(editEmail, true);
+                celular = Validation.hasText(editCelular);
+                cpfV = Validation.isValid(editCpf, "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}", "CPF invalido", true);
+                aniversario = Validation.isValid(editAniversario, "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/[12][0-9]{3}$", "Data invalida", true);
 
-                if(name.split("\\w+").length>1){
+                if((nome == Boolean.TRUE) && (senha == Boolean.TRUE) && (login == Boolean.TRUE) && (email == Boolean.TRUE) && (celular == Boolean.TRUE) && (cpfV == Boolean.TRUE) && (aniversario == Boolean.TRUE)) {
 
-                    user.setLastName(name.substring(name.lastIndexOf(" ") + 1));
-                    user.setFirstName(name.substring(0, name.lastIndexOf(' ')));
+
+                    User user = new User();
+                    String name = editNome.getText().toString();
+
+                    if (name.split("\\w+").length > 1) {
+
+                        user.setLastName(name.substring(name.lastIndexOf(" ") + 1));
+                        user.setFirstName(name.substring(0, name.lastIndexOf(' ')));
+                    } else {
+                        user.setFirstName(name);
+                    }
+                    user.setCellphone(Long.parseLong(editCelular.getText().toString()));
+                    user.setEmail(editEmail.getText().toString());
+                    user.setGender(gender);
+                    user.setBirthdate(dateStringToMillis(editAniversario.getText().toString()));
+                    user.setLogin(editLogin.getText().toString());
+                    user.setPassword(editSenha.getText().toString());
+                    String cpf = editCpf.getText().toString();
+
+                    user.setCpf(Long.parseLong(cpf.replaceAll("[\\D]", "")));
+
+
+                    createAccount(v.getContext(), user);
+
+
                 }
-                else{
-                    user.setFirstName(name);
-                }
-				user.setCellphone(Long.parseLong(editCelular.getText().toString()));
-				user.setEmail(editEmail.getText().toString());
-				user.setGender(gender);
-				user.setBirthdate(dateStringToMillis(editAniversario.getText().toString()));
-                user.setLogin(editLogin.getText().toString());
-                user.setPassword(editSenha.getText().toString());
-                String cpf = editCpf.getText().toString();
-
-                user.setCpf(Long.parseLong(cpf.replaceAll("[\\D]", "")));
-
-
-                        createAccount(v.getContext(), user);
-						Intent itMain = new Intent (getApplicationContext(), FidelityCardActivity.class);
-						startActivity(itMain);
-	
-				
 				
 			}
 		});
@@ -155,14 +134,14 @@ public class CreateAccountActivity extends Activity{
     public User postData(User user) {
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://192.168.0.15:8080/Caco-webservice/addUser");
+        HttpPost httppost = new HttpPost("http://10.154.172.30:8080/Caco-webservice/addUser");
 
         try {
             // Add your data
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("first_name", user.getFirstName()));
             nameValuePairs.add(new BasicNameValuePair("last_name", user.getLastName()));
-            nameValuePairs.add(new BasicNameValuePair("cpf", ""+user.getCpf()));
+            nameValuePairs.add(new BasicNameValuePair("cpf", "" + user.getCpf()));
             nameValuePairs.add(new BasicNameValuePair("cpf", ""+user.getCpf()));
             nameValuePairs.add(new BasicNameValuePair("birth_date", user.getBirthdate()));
             nameValuePairs.add(new BasicNameValuePair("gender", user.getGender()));
@@ -190,10 +169,14 @@ public class CreateAccountActivity extends Activity{
 
         } catch (ClientProtocolException e) {
             // TODO Auto-generated catch block
+            e.printStackTrace();
+            user = null;
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            e.printStackTrace();
+            user = null;
         } catch (JSONException e) {
             e.printStackTrace();
+            user = null;
         }
 
         return user;
@@ -259,9 +242,11 @@ public class CreateAccountActivity extends Activity{
 
     public void createAccount(final Context context, final User user)
     {
+
+
         AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 
-
+            public boolean startNewActivity;
             public ProgressDialog mProgressDialog;
 
             @Override
@@ -277,8 +262,19 @@ public class CreateAccountActivity extends Activity{
             @Override
             protected Void doInBackground(Void... params) {
 
-                postData(user);
+                User newUser= postData(user);
 
+                if(newUser != null)
+                {
+                    UserDAO userDAO = new UserDAO(context);
+                    userDAO.insertUser(newUser);
+                    startNewActivity = true;
+                }
+
+                if(newUser == null)
+                {
+                    startNewActivity = false;
+                }
 
                 return null;
             }
@@ -288,6 +284,17 @@ public class CreateAccountActivity extends Activity{
                 super.onPostExecute(result);
 
                 mProgressDialog.dismiss();
+
+                if(startNewActivity == Boolean.TRUE) {
+                    Intent itMain = new Intent(context, FidelityCardActivity.class);
+                    startActivity(itMain);
+                    finish();
+                }
+                else
+                {
+
+                    Toast.makeText(context, "Não foi possivel conectar-se ao servidor", Toast.LENGTH_LONG).show();
+                }
 
 
                 }
