@@ -85,50 +85,6 @@ public class LoginActivity extends FragmentActivity{
 		
 	}
 
-    public User postData(User user) {
-        // Create a new HttpClient and Post Header
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://10.154.172.30:8080/Caco-webservice/userLogin");
-
-        try {
-            // Add your data
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("email", user.getEmail()));
-            nameValuePairs.add(new BasicNameValuePair("login", user.getLogin()));
-            nameValuePairs.add(new BasicNameValuePair("password", user.getPassword()));
-
-
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-            // Execute HTTP Post Request
-            HttpResponse response = httpclient.execute(httppost);
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-            StringBuilder builder = new StringBuilder();
-            for (String line = null; (line = reader.readLine()) != null;) {
-                builder.append(line).append("\n");
-            }
-            JSONObject jsonObject = new JSONObject(builder.toString());
-
-            user.setId(jsonObject.optInt("id"));
-            user.setToken(jsonObject.optString("token"));
-            user.setPermission(jsonObject.optString("permission"));
-
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            user = null;
-        } catch (IOException e) {
-            e.printStackTrace();
-            user = null;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            user = null;
-        }
-
-        return user;
-    }
-
     public void executeLogin(final Context context, final User user)
     {
 
@@ -189,6 +145,51 @@ public class LoginActivity extends FragmentActivity{
             }
 
         }.execute();
+    }
+
+
+    public User postData(User user) {
+        // Create a new HttpClient and Post Header
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost("http://10.154.172.30:8080/Caco-webservice/userLogin");
+
+        try {
+            // Add your data
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("email", user.getEmail()));
+            nameValuePairs.add(new BasicNameValuePair("login", user.getLogin()));
+            nameValuePairs.add(new BasicNameValuePair("password", user.getPassword()));
+
+
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            // Execute HTTP Post Request
+            HttpResponse response = httpclient.execute(httppost);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+            StringBuilder builder = new StringBuilder();
+            for (String line = null; (line = reader.readLine()) != null;) {
+                builder.append(line).append("\n");
+            }
+            JSONObject jsonObject = new JSONObject(builder.toString());
+
+            user.setId(jsonObject.optInt("id"));
+            user.setToken(jsonObject.optString("token"));
+            user.setPermission(jsonObject.optString("permission"));
+
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            user = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            user = null;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            user = null;
+        }
+
+        return user;
     }
 
 

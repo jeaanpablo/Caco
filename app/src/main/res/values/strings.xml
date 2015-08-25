@@ -20,6 +20,9 @@
      <string name="menu_perfil">Perfil</string>
      <string name="menu_lojas">Lojas</string>
      <string name="menu_amigos">Amigos</string>
+    <string name="title_activity_store_profile">StoreProfileActivity</string>
+
+    <string name="hello_world">Hello world!</string>
    
 
 </resources>

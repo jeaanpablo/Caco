@@ -70,7 +70,7 @@ public class FidelityCardActivity extends FragmentActivity implements
         
         if(tab.getPosition() == 1)
         {
-        	getActionBar().setTitle("Mais Próximos");
+        	getActionBar().setTitle("Mais PrÃ³ximos");
         }
         
         if(tab.getPosition() == 2)
@@ -80,7 +80,7 @@ public class FidelityCardActivity extends FragmentActivity implements
         
         if(tab.getPosition() == 3)
         {
-        	getActionBar().setTitle("Notificações");
+        	getActionBar().setTitle("NotificaÃ§Ãµes");
         }
         
 
