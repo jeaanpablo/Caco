@@ -6,12 +6,16 @@ import java.util.List;
 import br.com.caco.R;
 import br.com.caco.adapters.RecentlyUsedFidelityCardListItemAdapter;
 import br.com.caco.gui.FidelityCardActivity;
+import br.com.caco.gui.NoBoringActionBarActivity;
 import br.com.caco.model.FidelityCardListItem;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,13 +44,24 @@ public class RecentlyUsedCardsFragment extends Fragment {
 			FidelityCardListItem item = new FidelityCardListItem("Mr. Kistch", "1500 pontos", R.drawable.mr_kistch, "10/12/2014", "56 km"); 
 			list.add(item);
 		}
-		RecentlyUsedFidelityCardListItemAdapter adapter = new RecentlyUsedFidelityCardListItemAdapter(view.getContext(), list);
+		final RecentlyUsedFidelityCardListItemAdapter adapter = new RecentlyUsedFidelityCardListItemAdapter(view.getContext(), list);
     	ListView listView = (ListView) view.findViewById(R.id.listFidelityCardsRecentlyUsed);
 		listView.setAdapter(adapter);
-        
-	
-        //tv.setText(tab);
-        //view.setBackgroundResource(color);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent itMain = new Intent (view.getContext(), NoBoringActionBarActivity.class);
+                startActivity(itMain);
+
+
+            }
+        });
+
+
+                //tv.setText(tab);
+                //view.setBackgroundResource(color);
         return view;
     }
 }

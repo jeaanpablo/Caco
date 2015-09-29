@@ -55,9 +55,9 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".gui.StoreProfileActivity"
-            android:label="@string/title_activity_store_profile"
-            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay">
+            android:name="br.com.caco.gui.NoBoringActionBarActivity"
+            android:label="@string/app_name"
+            android:theme="@style/TransparentTheme">
         </activity>
     </application>
 

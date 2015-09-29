@@ -23,6 +23,7 @@
     <string name="title_activity_store_profile">StoreProfileActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_fake__header">Fake_Header</string>
    
 
 </resources>
