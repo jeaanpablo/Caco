@@ -54,10 +54,11 @@
             android:name=".gui.CreateAccountActivity"
             android:label="@string/app_name" >
         </activity>
+
         <activity
-            android:name="br.com.caco.gui.NoBoringActionBarActivity"
-            android:label="@string/app_name"
-            android:theme="@style/TransparentTheme">
+            android:name=".gui.StoreProfileActivity"
+            android:label="@string/title_activity_store_profile"
+            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay">
         </activity>
     </application>
 

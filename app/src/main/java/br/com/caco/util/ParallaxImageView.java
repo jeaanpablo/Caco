@@ -1,4 +1,4 @@
-package br.com.caco.gui;
+package br.com.caco.util;
 
 import android.content.Context;
 import android.graphics.Canvas;

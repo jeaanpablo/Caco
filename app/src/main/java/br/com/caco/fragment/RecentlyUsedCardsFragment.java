@@ -5,8 +5,7 @@ import java.util.List;
 
 import br.com.caco.R;
 import br.com.caco.adapters.RecentlyUsedFidelityCardListItemAdapter;
-import br.com.caco.gui.FidelityCardActivity;
-import br.com.caco.gui.NoBoringActionBarActivity;
+import br.com.caco.gui.StoreProfileActivity;
 import br.com.caco.model.FidelityCardListItem;
 
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class RecentlyUsedCardsFragment extends Fragment {
 
@@ -52,7 +50,7 @@ public class RecentlyUsedCardsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent itMain = new Intent (view.getContext(), NoBoringActionBarActivity.class);
+                Intent itMain = new Intent (view.getContext(), StoreProfileActivity.class);
                 startActivity(itMain);
 
 
