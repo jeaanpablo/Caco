@@ -21,7 +21,7 @@ public class StoreProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_profile);
 
-        mActionBarBackgroundDrawable = new ColorDrawable(Color.parseColor("#ff0000"));
+        mActionBarBackgroundDrawable = new ColorDrawable(Color.parseColor("#00b4bb"));
         mActionBarBackgroundDrawable.setAlpha(0);
 
         getActionBar().setBackgroundDrawable(mActionBarBackgroundDrawable);

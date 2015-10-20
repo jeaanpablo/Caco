@@ -10,12 +10,136 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
         <ImageView
             android:id="@+id/image_header"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:scaleType="centerCrop"
             android:src="@drawable/goku"/>
+
+
+        <ImageView
+            android:id="@+id/StoreProfileImageProfile"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/mr_kistch"
+            android:contentDescription="desc"
+            android:layout_marginTop="140dp"
+            android:layout_marginLeft="7dp"
+            android:padding="3dp"
+            android:background="@drawable/image_border"
+            android:scaleType="fitXY"
+            android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:id="@+id/textViewAllStoresName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="198dp"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@+id/StoreProfileImageProfile"
+                android:paddingBottom="3dp"
+                android:text="Mr Kitsch"
+                android:verticalScrollbarPosition="left"
+                android:allowUndo="false" />
+
+        </RelativeLayout>
+        
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+
+
+            <ImageView
+                android:id="@+id/imageViewStatus"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="Caco Logo"
+                android:src="@drawable/caco_logo" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="Fidelize-se"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Recompensas"
+                android:id="@+id/textView"
+                android:padding="10dp"/>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="178dp"
+                android:id="@+id/listView"
+                android:layout_gravity="center_horizontal"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Como funciona"
+                android:id="@+id/textViewComoFunciona"
+                android:padding="10dp"/>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="178dp"
+                android:id="@+id/listView2"
+                android:layout_gravity="center_horizontal"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
 
 
     </LinearLayout>
