@@ -42,6 +42,7 @@ public class RecentlyUsedCardsFragment extends Fragment {
 			FidelityCardListItem item = new FidelityCardListItem("Mr. Kistch", "1500 pontos", R.drawable.mr_kistch, "10/12/2014", "56 km"); 
 			list.add(item);
 		}
+
 		final RecentlyUsedFidelityCardListItemAdapter adapter = new RecentlyUsedFidelityCardListItemAdapter(view.getContext(), list);
     	ListView listView = (ListView) view.findViewById(R.id.listFidelityCardsRecentlyUsed);
 		listView.setAdapter(adapter);

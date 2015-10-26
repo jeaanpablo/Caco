@@ -22,38 +22,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/goku"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal" >
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal" >
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal" >
-
-
-        </RelativeLayout>
-
 
             <ImageView
             android:id="@+id/StoreProfileImageProfile"
@@ -69,18 +37,31 @@
             android:layout_alignParentLeft="true" />
 
             <TextView
-                android:id="@+id/textViewAllStoresName"
+                android:id="@+id/textViewStoreProfileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="198dp"
+                android:layout_marginTop="168dp"
                 android:textColor="#FFFFFF"
                 android:textSize="25dp"
                 android:layout_marginLeft="6dp"
                 android:layout_toRightOf="@+id/StoreProfileImageProfile"
                 android:paddingBottom="3dp"
                 android:text="Mr Kitsch"
-                android:verticalScrollbarPosition="left"
-                 />
+                android:verticalScrollbarPosition="left"/>
+
+            <TextView
+                android:id="@+id/textViewStoreProfileAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="198dp"
+                android:textColor="#E8E8E8"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@+id/StoreProfileImageProfile"
+                android:paddingBottom="3dp"
+                android:text="Avenida John Boyd Dunlop, 440, Jardim Ipaussurama, Campinas, SP"
+                android:verticalScrollbarPosition="left"/>
+
 
         </RelativeLayout>
         
@@ -107,44 +88,41 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:text="Fidelize-se"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-        </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="6dp">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="20dp"
                 android:text="Recompensas"
-                android:id="@+id/textView"
-                android:padding="10dp"/>
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/textView" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
 
             <ListView
-                android:layout_width="match_parent"
-                android:layout_height="178dp"
-                android:id="@+id/listView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/listViewSales"
                 android:layout_gravity="center_horizontal"
-                android:padding="10dp" />
+                android:scrollbars="none"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
 
         </LinearLayout>
 
@@ -158,17 +136,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="20dp"
                 android:text="Como funciona"
                 android:id="@+id/textViewComoFunciona"
-                android:padding="10dp"/>
+                android:layout_gravity="center_horizontal"/>
 
             <ListView
-                android:layout_width="match_parent"
-                android:layout_height="178dp"
-                android:id="@+id/listView2"
-                android:layout_gravity="center_horizontal"
-                android:padding="10dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/listViewSalesParameter"
+                android:layout_gravity="center_horizontal"/>
 
         </LinearLayout>
 
