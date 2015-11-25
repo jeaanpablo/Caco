@@ -1,18 +1,19 @@
 package br.com.caco.model;
 
 public class Store {
-	
+
+	private int id;
 	private String name;
 	private String address;
 	private boolean fidelity; //Only for demo
 	private int storeLogo; //Only for demo
-	
-	
-	public Store (String name, String address, int storeLogo)
-	{
-		this.name = name;
-		this.address = address;
-		this.storeLogo = storeLogo;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public int getStoreLogo() {

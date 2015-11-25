@@ -36,52 +36,65 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends FragmentActivity{
-	
+
+    UserDAO userDao;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
-		
-		Button btnCadastrese = (Button) findViewById(R.id.buttonCadastreSe);
-		Button btnEntrar = (Button) findViewById(R.id.buttonLoginEntrar);
-		
-		btnEntrar.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
+        userDao  = new UserDAO(getApplicationContext());
 
-                boolean email, senha;
+        List<User> userList = userDao.getAll();
 
-                EditText editEmail = (EditText) findViewById(R.id.editTextLoginEmail);
-                EditText editSenha = (EditText) findViewById(R.id.editTextLoginSenha);
 
-                email = Validation.isEmailAddress(editEmail, true);
-                senha = Validation.hasText(editSenha);
+        if(userList.isEmpty()) {
+            setContentView(R.layout.activity_login);
 
-                if((email == Boolean.TRUE) && (senha == Boolean.TRUE))
-                {
-                    User user = new User();
-                    user.setEmail(editEmail.getText().toString());
-                    user.setLogin("");
-                    user.setPassword(editSenha.getText().toString());
+            Button btnCadastrese = (Button) findViewById(R.id.buttonCadastreSe);
+            Button btnEntrar = (Button) findViewById(R.id.buttonLoginEntrar);
 
-                    executeLogin(v.getContext(), user);
+            btnEntrar.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    boolean email, senha;
+
+                    EditText editEmail = (EditText) findViewById(R.id.editTextLoginEmail);
+                    EditText editSenha = (EditText) findViewById(R.id.editTextLoginSenha);
+
+                    email = Validation.isEmailAddress(editEmail, true);
+                    senha = Validation.hasText(editSenha);
+
+                    if ((email == Boolean.TRUE) && (senha == Boolean.TRUE)) {
+                        User user = new User();
+                        user.setEmail(editEmail.getText().toString());
+                        user.setLogin("");
+                        user.setPassword(editSenha.getText().toString());
+
+                        executeLogin(v.getContext(), user);
+                    }
+
+
                 }
+            });
 
-				
-			}
-		});
-		
-		btnCadastrese.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				
-				Intent it = new Intent(getApplicationContext(), CreateAccountActivity.class);
-				startActivity(it);
-			}
-		} );
+            btnCadastrese.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+
+                    Intent it = new Intent(getApplicationContext(), CreateAccountActivity.class);
+                    startActivity(it);
+                }
+            });
+        }else
+        {
+            Intent itMain = new Intent (getApplicationContext(), FidelityCardActivity.class);
+            startActivity(itMain);
+            finish();
+        }
 		
 	}
 

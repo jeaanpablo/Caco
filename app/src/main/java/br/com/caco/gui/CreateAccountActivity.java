@@ -134,7 +134,7 @@ public class CreateAccountActivity extends Activity{
     public User postData(User user) {
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://10.154.172.30:8080/Caco-webservice/addUser");
+        HttpPost httppost = new HttpPost("http://45.79.178.168:8080/Caco-webservice/addUserApp");
 
         try {
             // Add your data

@@ -3,14 +3,12 @@ package br.com.caco.adapters;
 import java.util.List;
 
 import br.com.caco.R;
-import br.com.caco.model.FidelityCardListItem;
+import br.com.caco.model.LoyalityCard;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,9 +16,9 @@ import android.widget.TextView;
 public class RecentlyUsedFidelityCardListItemAdapter extends BaseAdapter{
 	
 	private Context context;
-	private List<FidelityCardListItem> storeList;
+	private List<LoyalityCard> storeList;
 	
-	public RecentlyUsedFidelityCardListItemAdapter(Context context, List<FidelityCardListItem> storeList)
+	public RecentlyUsedFidelityCardListItemAdapter(Context context, List<LoyalityCard> storeList)
 	{
 		this.context = context;
 		this.storeList = storeList;
@@ -46,7 +44,7 @@ public class RecentlyUsedFidelityCardListItemAdapter extends BaseAdapter{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		FidelityCardListItem item = storeList.get(position);
+		LoyalityCard item = storeList.get(position);
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View v = inflater.inflate(R.layout.list_recently_used_fidelity_card_item, null);
 		TextView textStoreName = (TextView) v.findViewById(R.id.textViewListFidelyCardName);

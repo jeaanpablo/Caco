@@ -3,15 +3,12 @@ package br.com.caco.adapters;
 import java.util.List;
 
 import br.com.caco.R;
-import br.com.caco.model.FidelityCardListItem;
 import br.com.caco.model.Store;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;

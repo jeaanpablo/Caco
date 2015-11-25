@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="168dp"
                 android:textColor="#FFFFFF"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:layout_marginLeft="6dp"
                 android:layout_toRightOf="@+id/StoreProfileImageProfile"
                 android:paddingBottom="3dp"
@@ -77,13 +77,36 @@
 
 
             <ImageView
-                android:id="@+id/imageViewStatus"
+                android:id="@+id/imageViewButtonGetLoyalityCard"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:contentDescription="Caco Logo"
-                android:src="@drawable/caco_logo" />
+                android:src="@drawable/caco"
+                />
+
+
+            <ImageView
+                android:id="@+id/imageViewStatus"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:contentDescription="Caco Logo"
+                android:src="@drawable/caco"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="2000 pontos"
+                android:layout_toRightOf="@+id/imageViewStatus"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/textViewPoints"
+                android:visibility="invisible"/>
 
 
         </RelativeLayout>
@@ -97,31 +120,40 @@
             android:layout_marginTop="6dp">
 
 
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/darker_gray"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="20sp"
+                android:layout_marginTop="5dp"
                 android:text="Recompensas"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/textView" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
 
 
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:divider="#FFFFFF"
                 android:id="@+id/listViewSales"
                 android:layout_gravity="center_horizontal"
                 android:scrollbars="none"/>
 
             <View
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/darker_gray"
+                android:padding="10dp"/>
 
 
         </LinearLayout>
@@ -133,17 +165,22 @@
             android:orientation="vertical">
 
 
+
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:text="Como funciona"
                 android:id="@+id/textViewComoFunciona"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"/>
 
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:divider="#FFFFFF"
                 android:id="@+id/listViewSalesParameter"
                 android:layout_gravity="center_horizontal"/>
 
