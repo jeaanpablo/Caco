@@ -60,7 +60,7 @@ public class GeolocationFidelityCardListItemAdapter extends BaseAdapter {
 
 		textStoreName.setText(item.getStoreName());
 		textStorePoints.setText(item.getPoints());
-		imageStoreLogo.setImageResource(item.getStoreLogo());
+		imageStoreLogo.setImageBitmap(item.getStoreLogo());
 		textStoreDistance.setText(item.getDistance());
 
 		return v;

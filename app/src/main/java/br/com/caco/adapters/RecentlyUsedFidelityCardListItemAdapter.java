@@ -54,7 +54,7 @@ public class RecentlyUsedFidelityCardListItemAdapter extends BaseAdapter{
 		
 		textStoreName.setText(item.getStoreName());
 		textStorePoints.setText(item.getPoints());
-		imageStoreLogo.setImageResource(item.getStoreLogo());
+		imageStoreLogo.setImageBitmap(item.getStoreLogo());
 		textStoreDate.setText(item.getData());
 		
 		return v;

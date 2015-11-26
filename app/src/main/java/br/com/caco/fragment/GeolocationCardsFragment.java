@@ -33,7 +33,7 @@ public class GeolocationCardsFragment extends Fragment {
 				R.layout.fragment_geolocation_fidelity_cards, null);
 
 		List<LoyalityCard> list = new ArrayList<LoyalityCard>();
-
+	/*
 		for (int i = 0; i < 10; i++) {
 			LoyalityCard item = new LoyalityCard("Mr. Kistch",
 					"1500 pontos", R.drawable.mr_kistch, "10/12/2014", "56 km");
@@ -44,6 +44,7 @@ public class GeolocationCardsFragment extends Fragment {
 		ListView listView = (ListView) view
 				.findViewById(R.id.listFidelityCardsGeolocation);
 		listView.setAdapter(adapter);
+		*/
 
 		// tv.setText(tab);
 		// view.setBackgroundResource(color);

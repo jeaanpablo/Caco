@@ -6,8 +6,8 @@ public class LoyalityCard {
 	
 	private String storeName;
 	private String points;
-	//private Bitmap storeLogo;
-	private String storeLogo;
+	private Bitmap storeLogo;
+	//private String storeLogo;
 	private String data; //provisorio, apenas para screenshot
 	private String distance; //provisorio apenas para screenshot
 
@@ -27,20 +27,20 @@ public class LoyalityCard {
 		this.points = points;
 	}
 
+	public Bitmap getStoreLogo() {
+		return storeLogo;
+	}
+
+	public void setStoreLogo(Bitmap storeLogo) {
+		this.storeLogo = storeLogo;
+	}
+
 	public String getData() {
 		return data;
 	}
 
 	public void setData(String data) {
 		this.data = data;
-	}
-
-	public String getStoreLogo() {
-		return storeLogo;
-	}
-
-	public void setStoreLogo(String storeLogo) {
-		this.storeLogo = storeLogo;
 	}
 
 	public String getDistance() {
