@@ -19,7 +19,6 @@ public class NotificationDAO {
 
     private UserData db;
 
-
     public NotificationDAO (Context ctx)
     {
         this.db = new UserData(ctx);
@@ -47,7 +46,7 @@ public class NotificationDAO {
     {
         List<Notification> notifications = new ArrayList<Notification>();
         SQLiteDatabase database = this.db.getReadableDatabase();
-        String[] FROM = {"_id", "id_user_requester", "name_user_requester", "img_path", "type", "id_store", "store_name"};
+        String[] FROM = {"_id", "id_user_requester", "name_user_requester", "img_path", "notif_type", "id_store", "store_name"};
 
         Cursor cursor = database.query(UserData.TABLE_NAME_NOTIFICATION, FROM, null, null, null, null, null);
 
