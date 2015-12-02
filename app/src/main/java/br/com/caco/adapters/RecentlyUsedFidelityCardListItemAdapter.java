@@ -53,7 +53,7 @@ public class RecentlyUsedFidelityCardListItemAdapter extends BaseAdapter{
 		ImageView imageStoreLogo = (ImageView) v.findViewById(R.id.imageViewListFidelityCardStore);
 		
 		textStoreName.setText(item.getStoreName());
-		textStorePoints.setText(item.getPoints());
+		textStorePoints.setText(item.getPoints() + " Pontos");
 		imageStoreLogo.setImageBitmap(item.getStoreLogo());
 		textStoreDate.setText(item.getData());
 		

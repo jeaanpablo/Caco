@@ -14,6 +14,7 @@ public class User {
     private String email;
     private String token;
     private String permission;
+    private String redId;
 
     public Integer getId() {
         return id;
@@ -109,5 +110,13 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getRedId() {
+        return redId;
+    }
+
+    public void setRedId(String redId) {
+        this.redId = redId;
     }
 }

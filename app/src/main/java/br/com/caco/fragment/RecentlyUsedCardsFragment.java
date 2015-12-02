@@ -6,7 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import br.com.caco.R;
@@ -74,6 +77,7 @@ public class RecentlyUsedCardsFragment extends Fragment {
         return view;
     }
 
+
     public void inflateLoyalityList(final View view, final User user)
     {
 
@@ -97,6 +101,7 @@ public class RecentlyUsedCardsFragment extends Fragment {
             protected Void doInBackground(Void... params) {
 
                 list = getLotalityCardByUser(user);
+                Collections.reverse(list);
 
                 return null;
             }
@@ -161,10 +166,22 @@ public class RecentlyUsedCardsFragment extends Fragment {
             for(int i=0;i<jsonArray.length();i++) {
                 JSONObject lines = (JSONObject) new JSONTokener(jsonArray.getString(i)).nextValue();
                 LoyalityCard loyality = new LoyalityCard();
+                Calendar cal = Calendar.getInstance();
 
                 loyality.setStoreName(lines.getString("storeName"));
                 loyality.setPoints("" + lines.getLong("points"));
                 loyality.setStoreLogo(getBitmapFromURL(lines.getString("urlImage")));
+
+                cal.setTimeInMillis(lines.getLong("lastUse"));
+
+                SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+                System.out.println(cal.getTime());
+
+                String formatted = format1.format(cal.getTime());
+
+
+                loyality.setData(formatted);
+
 
                 list.add(loyality);
 

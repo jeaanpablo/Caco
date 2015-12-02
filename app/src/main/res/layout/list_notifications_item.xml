@@ -34,5 +34,49 @@
         android:layout_below="@+id/textViewNotificationTitle"
         android:text="indicou a loja Mr. Kistch para você."
         android:textAppearance="?android:attr/textAppearanceSmall"/>
-    
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="65dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="5dp"
+        android:layout_alignLeft="@+id/textViewNotificationsMessage"
+        android:layout_below="@+id/textViewNotificationsMessage"
+        android:background="@drawable/layout"
+        android:textColor="#FFFFFFFF"
+        android:text=" Aceitar "
+        android:id="@+id/buttonAccept"
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="65dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/textViewNotificationsMessage"
+        android:layout_marginLeft="9dp"
+        android:layout_toRightOf="@+id/buttonAccept"
+        android:background="@drawable/layout"
+        android:textColor="#FFFFFFFF"
+        android:visibility="invisible"
+        android:text=" Recusar "
+        android:id="@+id/buttonRecuse"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="90dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="5dp"
+        android:layout_alignLeft="@+id/textViewNotificationsMessage"
+        android:layout_below="@+id/textViewNotificationsMessage"
+        android:background="@drawable/layout"
+        android:textColor="#FFFFFFFF"
+        android:text=" Confirmar "
+        android:visibility="invisible"
+        android:id="@+id/buttonConfirm"
+        android:layout_centerHorizontal="true" />
+
+
 </RelativeLayout>

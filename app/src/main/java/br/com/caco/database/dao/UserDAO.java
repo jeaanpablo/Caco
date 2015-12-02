@@ -35,7 +35,7 @@ public class  UserDAO {
         values.put("permission", user.getPermission());
         values.put("id_user", user.getId());
 
-        database.insert(UserData.TABLE_NAME, null, values);
+        database.insert(UserData.TABLE_NAME_USER, null, values);
         database.close();
     }
 
@@ -45,7 +45,7 @@ public class  UserDAO {
         SQLiteDatabase database = this.db.getReadableDatabase();
         String[] FROM = {"_id", "token", "permission", "id_user"};
 
-        Cursor cursor = database.query(UserData.TABLE_NAME, FROM, null, null, null, null, null);
+        Cursor cursor = database.query(UserData.TABLE_NAME_USER, FROM, null, null, null, null, null);
 
         cursor.isFirst();
 

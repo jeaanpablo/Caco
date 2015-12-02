@@ -42,6 +42,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
+
 public class CreateAccountActivity extends Activity{
 	String gender;
 	private static final String TAG = "HttpClient";
@@ -88,17 +91,15 @@ public class CreateAccountActivity extends Activity{
 				final EditText editNome = (EditText) findViewById(R.id.editTextCreateAccountNome);
 				EditText editCelular = (EditText) findViewById(R.id.editTextCreateAccountCelular);
 				EditText editSenha = (EditText) findViewById(R.id.editTextCreateAccountSenha);
-                EditText editLogin = (EditText) findViewById(R.id.editTextCreateAccountLogin);
 
                 nome = Validation.hasText(editNome);
                 senha = Validation.hasText(editSenha);
-                login = Validation.hasText(editLogin);
                 email = Validation.isEmailAddress(editEmail, true);
                 celular = Validation.hasText(editCelular);
                 cpfV = Validation.isValid(editCpf, "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}", "CPF invalido", true);
                 aniversario = Validation.isValid(editAniversario, "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/[12][0-9]{3}$", "Data invalida", true);
 
-                if((nome == Boolean.TRUE) && (senha == Boolean.TRUE) && (login == Boolean.TRUE) && (email == Boolean.TRUE) && (celular == Boolean.TRUE) && (cpfV == Boolean.TRUE) && (aniversario == Boolean.TRUE)) {
+                if((nome == Boolean.TRUE) && (senha == Boolean.TRUE) && (email == Boolean.TRUE) && (celular == Boolean.TRUE) && (cpfV == Boolean.TRUE) && (aniversario == Boolean.TRUE)) {
 
 
                     User user = new User();
@@ -115,7 +116,6 @@ public class CreateAccountActivity extends Activity{
                     user.setEmail(editEmail.getText().toString());
                     user.setGender(gender);
                     user.setBirthdate(dateStringToMillis(editAniversario.getText().toString()));
-                    user.setLogin(editLogin.getText().toString());
                     user.setPassword(editSenha.getText().toString());
                     String cpf = editCpf.getText().toString();
 
@@ -146,9 +146,9 @@ public class CreateAccountActivity extends Activity{
             nameValuePairs.add(new BasicNameValuePair("birth_date", user.getBirthdate()));
             nameValuePairs.add(new BasicNameValuePair("gender", user.getGender()));
             nameValuePairs.add(new BasicNameValuePair("email", user.getEmail()));
-            nameValuePairs.add(new BasicNameValuePair("login", user.getLogin()));
             nameValuePairs.add(new BasicNameValuePair("password", user.getPassword()));
             nameValuePairs.add(new BasicNameValuePair("cellphone", ""+user.getCellphone()));
+            nameValuePairs.add(new BasicNameValuePair("regId", user.getRedId()));
 
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -262,6 +262,8 @@ public class CreateAccountActivity extends Activity{
             @Override
             protected Void doInBackground(Void... params) {
 
+                    user.setRedId(Util.getRegId(context));
+
                 User newUser= postData(user);
 
                 if(newUser != null)
@@ -301,6 +303,8 @@ public class CreateAccountActivity extends Activity{
 
         }.execute();
     }
+
+
 
 
 }

@@ -4,6 +4,7 @@ package br.com.caco.gui;
 import br.com.caco.R;
 import br.com.caco.database.dao.UserDAO;
 import br.com.caco.model.User;
+import br.com.caco.util.Util;
 import br.com.caco.util.Validation;
 
 import android.app.Activity;
@@ -120,6 +121,8 @@ public class LoginActivity extends FragmentActivity{
             @Override
             protected Void doInBackground(Void... params) {
 
+                user.setRedId(Util.getRegId(context));
+
                 User newUser= postData(user);
 
                 if(newUser != null)
@@ -164,14 +167,14 @@ public class LoginActivity extends FragmentActivity{
     public User postData(User user) {
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://45.79.178.168:8080/Caco-webservice/userLogin");
+        HttpPost httppost = new HttpPost("http://45.79.178.168:8080/Caco-webservice/userAppLogin");
 
         try {
             // Add your data
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("email", user.getEmail()));
-            nameValuePairs.add(new BasicNameValuePair("login", user.getLogin()));
             nameValuePairs.add(new BasicNameValuePair("password", user.getPassword()));
+            nameValuePairs.add(new BasicNameValuePair("regId", user.getRedId()));
 
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -186,7 +189,7 @@ public class LoginActivity extends FragmentActivity{
             }
             JSONObject jsonObject = new JSONObject(builder.toString());
 
-            user.setId(jsonObject.optInt("id"));
+            user.setId(jsonObject.optInt("idUser"));
             user.setToken(jsonObject.optString("token"));
             user.setPermission(jsonObject.optString("permission"));
 

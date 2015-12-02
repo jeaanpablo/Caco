@@ -2,39 +2,67 @@ package br.com.caco.model;
 
 public class Notification {
 	
-	private String title;
-	private String message;
-	private int image; //Only for draft
-	
-	public Notification (String title, String message, int image)
-	{
-		this.image = image;
-		this.message = message;
-		this.title = title;
+	private int id;
+	private int idUserRequester;
+	private String nameUserRequester;
+	private int idStore;
+	private String type;
+	private String nameStore;
+	private String imgPath;
+
+	public int getId() {
+		return id;
 	}
 
-	public String getTitle() {
-		return title;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public int getIdUserRequester() {
+		return idUserRequester;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getType() {
+		return type;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public int getImage() {
-		return image;
+	public void setIdUserRequester(int idUserRequester) {
+		this.idUserRequester = idUserRequester;
 	}
 
-	public void setImage(int image) {
-		this.image = image;
+	public String getNameUserRequester() {
+		return nameUserRequester;
 	}
 
+	public void setNameUserRequester(String nameUserRequester) {
+		this.nameUserRequester = nameUserRequester;
+	}
+
+	public int getIdStore() {
+		return idStore;
+	}
+
+	public void setIdStore(int idStore) {
+		this.idStore = idStore;
+	}
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
+	public String getNameStore() {
+		return nameStore;
+	}
+
+	public void setNameStore(String nameStore) {
+		this.nameStore = nameStore;
+	}
 }
