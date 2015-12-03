@@ -3,14 +3,33 @@ package br.com.caco.model;
 public class Notification {
 	
 	private int id;
+    private int idUserApprover;
 	private int idUserRequester;
 	private String nameUserRequester;
 	private int idStore;
 	private String type;
 	private String nameStore;
 	private String imgPath;
+	private int statusNotification;
 
-	public int getId() {
+
+    public int getIdUserApprover() {
+        return idUserApprover;
+    }
+
+    public void setIdUserApprover(int idUserApprover) {
+        this.idUserApprover = idUserApprover;
+    }
+
+    public int getStatusNotification() {
+        return statusNotification;
+    }
+
+    public void setStatusNotification(int statusNotification) {
+        this.statusNotification = statusNotification;
+    }
+
+    public int getId() {
 		return id;
 	}
 

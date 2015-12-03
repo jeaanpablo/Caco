@@ -9,9 +9,14 @@ import android.support.v4.app.NotificationCompat;
 import com.google.android.gms.gcm.GcmListenerService;
 
 import java.lang.reflect.Array;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import br.com.caco.R;
+import br.com.caco.database.dao.NotificationDAO;
+import br.com.caco.database.dao.UserDAO;
+import br.com.caco.model.Notification;
+import br.com.caco.model.User;
 
 /**
  * Created by Jean Pablo Bosso on 29/11/2015.
@@ -23,9 +28,12 @@ public class GcmIntentService extends GcmListenerService {
         String message = data.getString("message");
         String[] splitMesage;
 
+            NotificationDAO notificationDAO = new NotificationDAO(getApplicationContext());
+        UserDAO userDAO = new UserDAO(getApplicationContext());
+        List<User> users = userDAO.getAll();
+        User user = users.get(0);
 
-
-            StringTokenizer tokens = new StringTokenizer(message, ";");
+        StringTokenizer tokens = new StringTokenizer(message, ";");
 
             String type = tokens.nextToken();
 
@@ -37,6 +45,15 @@ public class GcmIntentService extends GcmListenerService {
                 String friendName = tokens.nextToken();
 
                 generateNoification(friendName, "Quer ser seu amigo.");
+
+                Notification notification = new Notification();
+
+                notification.setIdUserRequester(Integer.parseInt(idFriend));
+                notification.setNameUserRequester(friendName);
+                notification.setType(type);
+                notification.setIdUserApprover(user.getId());
+
+                notificationDAO.insertNotification(notification);
 
                 updateMyActivity(getApplicationContext(), message);
 
@@ -55,7 +72,17 @@ public class GcmIntentService extends GcmListenerService {
             String storeName = tokens.nextToken();
 
 
-            generateNoification(friendName, "Indicou "+ storeName +" para você.");
+            Notification notification = new Notification();
+
+            generateNoification(friendName, "Indicou " + storeName + " para você.");
+
+            notification.setIdUserRequester(Integer.parseInt(idFriend));
+            notification.setNameUserRequester(friendName);
+            notification.setIdStore(Integer.parseInt(idStore));
+            notification.setNameStore(storeName);
+            notification.setType(type);
+
+            notificationDAO.insertNotification(notification);
 
         }
 

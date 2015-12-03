@@ -7,6 +7,7 @@ import java.util.StringTokenizer;
 import br.com.caco.R;
 import br.com.caco.adapters.NotificationsAdapter;
 import br.com.caco.database.dao.NotificationDAO;
+import br.com.caco.database.dao.UserDAO;
 import br.com.caco.model.Notification;
 
 import android.content.BroadcastReceiver;
@@ -91,7 +92,7 @@ public class NotificationFragment extends Fragment {
 
                 notif.setIdUserRequester(Integer.parseInt(idFriend));
                 notif.setNameUserRequester(friendName);
-                notif.setImgPath();
+                notif.setImgPath("iauhdiasuh");
 
 			}
 
