@@ -61,18 +61,9 @@ import android.widget.TextView;
 			ImageView imageNotification = (ImageView) v
 					.findViewById(R.id.imageViewNotificationImage);
 
-			textNotificationTitle.setText(item.getNameUserRequester());
-
-			if(item.getType().equalsIgnoreCase("Friend"))
-			{
-				textNotificationMessage.setText("Quer ser seu amigo.");
-			}
-			else if (item.getType().equalsIgnoreCase("STORE"))
-			{
-				textNotificationMessage.setText("Indicou " + item.getNameStore() +" para você.");
-			}
-
-			imageNotification.setImageResource(R.drawable.goku);
+			textNotificationTitle.setText(item.getTitle());
+			textNotificationMessage.setText(item.getMessage());
+			imageNotification.setImageResource(item.getImage());
 
 			return v;
 		}
