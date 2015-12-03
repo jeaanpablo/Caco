@@ -47,7 +47,7 @@ public class NotificationDAO {
     {
         List<Notification> notifications = new ArrayList<Notification>();
         SQLiteDatabase database = this.db.getReadableDatabase();
-        String[] FROM = {"_id", "id_user_requester", "name_user_requester", "img_path", "type", "id_store", "store_name"};
+        String[] FROM = {"_id", "id_user_requester", "name_user_requester", "img_path", "notif_type", "id_store", "store_name", " id_approver integer"};
 
         Cursor cursor = database.query(UserData.TABLE_NAME_NOTIFICATION, FROM, null, null, null, null, null);
 
@@ -65,6 +65,7 @@ public class NotificationDAO {
             notif.setType(cursor.getString(cursor.getColumnIndex("notif_type")));
             notif.setIdStore(cursor.getInt(cursor.getColumnIndex("id_store")));
             notif.setNameStore(cursor.getString(cursor.getColumnIndex("store_name")));
+            notif.setIdUserApprover(cursor.getColumnIndex("id_approver"));
 
 
             database.close();
