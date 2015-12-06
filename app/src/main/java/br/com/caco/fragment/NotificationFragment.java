@@ -25,6 +25,8 @@ public class NotificationFragment extends Fragment {
 
 	private String tab;
 	private int color;
+	List<Notification> list;
+	NotificationsAdapter adapter;
 
 	private NotificationDAO notificationDAO;
 
@@ -46,10 +48,10 @@ public class NotificationFragment extends Fragment {
 
 		NotificationDAO notificationDAO = new NotificationDAO(view.getContext());
 
-		List<Notification> list = notificationDAO.getAll();
+		list = notificationDAO.getAll();
 
 
-		NotificationsAdapter adapter = new NotificationsAdapter (view.getContext(), list);
+		adapter = new NotificationsAdapter (view.getContext(), list);
 		ListView listView = (ListView) view
 				.findViewById(R.id.listNotifications);
 		listView.setAdapter(adapter);
@@ -94,6 +96,9 @@ public class NotificationFragment extends Fragment {
                 notif.setNameUserRequester(friendName);
                 notif.setImgPath("iauhdiasuh");
 
+                list.add(notif);
+				adapter.updateAdapter(list);
+
 			}
 
 
@@ -107,6 +112,15 @@ public class NotificationFragment extends Fragment {
 				String idStore = tokens.nextToken();
 
 				String storeName = tokens.nextToken();
+
+                notif.setIdUserRequester(Integer.parseInt(idFriend));
+                notif.setNameUserRequester(friendName);
+                notif.setIdStore(Integer.parseInt(idStore));
+                notif.setNameStore(storeName);
+                notif.setType(type);
+
+                list.add(notif);
+                adapter.updateAdapter(list);
 
 			}
 

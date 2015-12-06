@@ -5,10 +5,12 @@
 	import java.io.BufferedReader;
     import java.io.IOException;
     import java.io.InputStreamReader;
+    import java.io.UnsupportedEncodingException;
     import java.util.ArrayList;
     import java.util.List;
 
 	import br.com.caco.R;
+    import br.com.caco.database.dao.NotificationDAO;
     import br.com.caco.database.dao.UserDAO;
     import br.com.caco.gui.FidelityCardActivity;
     import br.com.caco.model.Notification;
@@ -32,6 +34,7 @@ import android.widget.TextView;
     import android.widget.Toast;
 
     import org.apache.http.HttpResponse;
+    import org.apache.http.HttpStatus;
     import org.apache.http.NameValuePair;
     import org.apache.http.client.ClientProtocolException;
     import org.apache.http.client.HttpClient;
@@ -46,11 +49,13 @@ import android.widget.TextView;
 
         private Context context;
         private List<Notification> notificationList;
+        private NotificationDAO notificationDAO;
 
         public NotificationsAdapter(Context context,
                                     List<Notification> notificationList) {
             this.context = context;
             this.notificationList = notificationList;
+            this.notificationDAO = new NotificationDAO(context);
         }
 
         @Override
@@ -124,6 +129,13 @@ import android.widget.TextView;
             return v;
         }
 
+        public void updateAdapter(List<Notification> arrylst) {
+            this.notificationList = arrylst;
+
+            //and call notifyDataSetChanged
+            notifyDataSetChanged();
+        }
+
 
         public void sendResponse(final Context context, final Notification notification) {
 
@@ -132,6 +144,7 @@ import android.widget.TextView;
 
                 public boolean startNewActivity;
                 public ProgressDialog mProgressDialog;
+                String message;
 
                 @Override
                 protected void onPreExecute() {
@@ -146,7 +159,12 @@ import android.widget.TextView;
                 @Override
                 protected Void doInBackground(Void... params) {
 
-                    postData(notification);
+                    try {
+                        message = postData(notification);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
 
                     return null;
@@ -157,9 +175,10 @@ import android.widget.TextView;
                     super.onPostExecute(result);
 
                     mProgressDialog.dismiss();
+                    updateAdapter(notificationList);
 
 
-                    Toast.makeText(context, "Não foi possivel conectar-se ao servidor", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 
 
                 }
@@ -168,46 +187,49 @@ import android.widget.TextView;
         }
 
 
-        public boolean postData(Notification notification) {
+        public String postData(Notification notification) throws IOException {
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://45.79.178.168:8080/Caco-webservice/responseNotification");
-
-            try {
-                // Add your data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                nameValuePairs.add(new BasicNameValuePair("id_user", "" + notification.getIdUserApprover()));
-                nameValuePairs.add(new BasicNameValuePair("type", notification.getType()));
-                nameValuePairs.add(new BasicNameValuePair("status", "" + notification.getStatusNotification()));
-                nameValuePairs.add(new BasicNameValuePair("id_user_friend", "" + notification.getNameUserRequester()));
-                nameValuePairs.add(new BasicNameValuePair("id_store", "" + notification.getIdStore()));
+            HttpPost httppost = new HttpPost("http://45.79.178.168:8080/Caco-webservice/responseNotification/");
 
 
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            // Add your data
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("id_user", "" + notification.getIdUserApprover()));
+            nameValuePairs.add(new BasicNameValuePair("type", notification.getType()));
+            nameValuePairs.add(new BasicNameValuePair("status", "" + notification.getStatusNotification()));
+            nameValuePairs.add(new BasicNameValuePair("id_user_friend", "" + notification.getIdUserRequester()));
+            nameValuePairs.add(new BasicNameValuePair("id_store", "" + notification.getIdStore()));
 
-                // Execute HTTP Post Request
-                HttpResponse response = httpclient.execute(httppost);
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-                StringBuilder builder = new StringBuilder();
-                for (String line = null; (line = reader.readLine()) != null; ) {
-                    builder.append(line).append("\n");
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            String resp = "Não foi possivel conectar-se ao servidor.";
+
+            // Execute HTTP Post Request
+            HttpResponse response = httpclient.execute(httppost);
+
+            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+
+                if(notification.getType().equalsIgnoreCase("friend"))
+                {
+                    resp = "Agora voce é amigo de "+notification.getNameUserRequester();
                 }
 
-                String massa = builder.toString();
+                if(notification.getType().equalsIgnoreCase("store"))
+                {
+                    resp = "Agora voce tem um cartão da "+ notification.getNameStore();
+                }
 
+                notificationList.remove(notification);
+                notificationDAO.deleteNotification(notification);
 
-            } catch (ClientProtocolException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                notification = null;
-            } catch (IOException e) {
-                e.printStackTrace();
-                notification = null;
-
-                return true;
+            }else
+            {
+                resp = response.getStatusLine().getReasonPhrase();
             }
 
-            return true;
+
+            return resp;
         }
     }

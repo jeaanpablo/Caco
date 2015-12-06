@@ -20,13 +20,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -107,6 +111,7 @@ public class LoginActivity extends FragmentActivity{
 
             public boolean startNewActivity;
             public ProgressDialog mProgressDialog;
+            String message = "Não foi possivel conectar-se ao servidor";
 
             @Override
             protected void onPreExecute() {
@@ -125,16 +130,17 @@ public class LoginActivity extends FragmentActivity{
 
                 User newUser= postData(user);
 
-                if(newUser != null)
+                if(newUser.getId() != 0)
                 {
                     UserDAO userDAO = new UserDAO(context);
                     userDAO.insertUser(newUser);
                     startNewActivity = true;
                 }
 
-                if(newUser == null)
+                if(newUser.getId() == 0)
                 {
                     startNewActivity = false;
+                    message = newUser.getToken();
                 }
 
                 return null;
@@ -154,7 +160,7 @@ public class LoginActivity extends FragmentActivity{
                 else
                 {
 
-                    Toast.makeText(context, "Não foi possivel conectar-se ao servidor", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                 }
 
 
@@ -182,16 +188,29 @@ public class LoginActivity extends FragmentActivity{
             // Execute HTTP Post Request
             HttpResponse response = httpclient.execute(httppost);
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-            StringBuilder builder = new StringBuilder();
-            for (String line = null; (line = reader.readLine()) != null;) {
-                builder.append(line).append("\n");
-            }
-            JSONObject jsonObject = new JSONObject(builder.toString());
 
-            user.setId(jsonObject.optInt("idUser"));
-            user.setToken(jsonObject.optString("token"));
-            user.setPermission(jsonObject.optString("permission"));
+            if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+                StringBuilder builder = new StringBuilder();
+                for (String line = null; (line = reader.readLine()) != null; ) {
+                    builder.append(line).append("\n");
+                }
+                JSONObject jsonObject = new JSONObject(builder.toString());
+
+                user.setId(jsonObject.optInt("idUser"));
+                user.setToken(jsonObject.optString("token"));
+                user.setPermission(jsonObject.optString("permission"));
+            }
+            else if (response.getStatusLine().getStatusCode() == HttpStatus.SC_NOT_FOUND)
+            {
+                String responseString = EntityUtils.toString(response.getEntity());
+                String[] partOne = responseString.split("<h1>");
+                String[] partTwo = partOne[1].split("</h1>");
+                String[] partThree = partTwo[0].split(" - ");
+
+                user.setToken(partThree[1]);
+                user.setId(0);
+            }
 
         } catch (ClientProtocolException e) {
             // TODO Auto-generated catch block

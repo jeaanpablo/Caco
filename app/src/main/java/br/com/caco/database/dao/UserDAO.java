@@ -68,6 +68,14 @@ public class  UserDAO {
 
     }
 
+
+    public void deleteAll()
+    {
+        SQLiteDatabase database = db.getWritableDatabase();
+        database.delete(UserData.TABLE_NAME_USER, null, null);
+        database.close();
+    }
+
 /*
     public void updateMonitoring (Monitoring monitoring)
     {

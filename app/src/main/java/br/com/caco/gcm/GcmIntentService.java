@@ -84,6 +84,8 @@ public class GcmIntentService extends GcmListenerService {
 
             notificationDAO.insertNotification(notification);
 
+            updateMyActivity(getApplicationContext(), message);
+
         }
 
 
