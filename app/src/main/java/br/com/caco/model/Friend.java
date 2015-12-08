@@ -1,17 +1,41 @@
 package br.com.caco.model;
 
+import android.graphics.Bitmap;
+
 public class Friend {
-	
+	private int id;
 	private String name;
-	private int image;
+	private String image;
+	private int idUser;
 	private boolean add;
-	
-	
-	public Friend(String name, boolean add, int image)
+	private Bitmap bitmapImg;
+
+	public Bitmap getBitmapImg() {
+		return bitmapImg;
+	}
+
+	public void setBitmapImg(Bitmap bitmapImg) {
+		this.bitmapImg = bitmapImg;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
+	}
+
+	public Friend()
 	{
-		this.name = name;
-		this.image = image;
-		this.add = add;
 	}
 	
 	public String getName() {
@@ -20,10 +44,10 @@ public class Friend {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getImage() {
+	public String getImage() {
 		return image;
 	}
-	public void setImage(int image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 	public boolean isAdd() {

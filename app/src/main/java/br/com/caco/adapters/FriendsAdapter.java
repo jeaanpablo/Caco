@@ -66,7 +66,7 @@ public class FriendsAdapter extends BaseAdapter {
 		}
 
 		textPersonName.setText(item.getName());
-		imageFriendPicture.setImageResource(item.getImage());
+		imageFriendPicture.setImageBitmap(item.getBitmapImg());
 
 		return v;
 	}
