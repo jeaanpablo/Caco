@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -16,7 +16,6 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <permission android:name="br.com.caco.permission.C2D_MESSAGE" android:protectionLevel="signature" />
@@ -91,6 +90,8 @@
             android:name=".gui.StoreProfileActivity"
             android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay">
         </activity>
+
+        <activity android:name="com.android.camera.CropImage"/>
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
