@@ -64,7 +64,7 @@ public class  UserDAO {
             user.setImagePath(cursor.getString(cursor.getColumnIndex("img_path")));
             user.setFirstName(cursor.getString(cursor.getColumnIndex("first_name")));
             user.setLastName(cursor.getString(cursor.getColumnIndex("last_name")));
-            user.setCellphone(cursor.getInt(cursor.getColumnIndex("cellphone")));
+            user.setCellphone(cursor.getLong(cursor.getColumnIndex("cellphone")));
 
             database.close();
 

@@ -2,6 +2,7 @@ package br.com.caco.gui;
 
 import br.com.caco.R;
 import br.com.caco.adapters.FidelityCardTabPagerAdapter;
+import br.com.caco.database.dao.FriendDAO;
 import br.com.caco.database.dao.NotificationDAO;
 import br.com.caco.database.dao.UserDAO;
 import br.com.caco.model.User;
@@ -50,6 +51,7 @@ public class FidelityCardActivity extends FragmentActivity implements
     private String[] tabs = {"Recentily Used Cards", "Geolocation Cards"};
     private UserDAO userDAO;
     private NotificationDAO notificationDAO;
+    private FriendDAO friendDAO;
     private Context ctx;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -182,6 +184,7 @@ public class FidelityCardActivity extends FragmentActivity implements
 
                 notificationDAO = new NotificationDAO(context);
                 userDAO = new UserDAO(context);
+                friendDAO = new FriendDAO(context);
 
                 List<User> list = userDAO.getAll();
 
@@ -189,6 +192,7 @@ public class FidelityCardActivity extends FragmentActivity implements
 
                 userDAO.deleteAll();
                 notificationDAO.deleteAll();
+                friendDAO.deleteAll();
 
                 return null;
             }

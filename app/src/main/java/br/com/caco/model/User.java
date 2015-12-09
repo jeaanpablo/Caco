@@ -8,7 +8,7 @@ public class User {
     private String login;
     private Long cpf;
 	private String password;
-	private int cellphone;
+	private long cellphone;
 	private String birthdate;
 	private String gender;
     private String email;
@@ -91,11 +91,11 @@ public class User {
         this.gender = gender;
     }
 
-    public int getCellphone() {
+    public long getCellphone() {
         return cellphone;
     }
 
-    public void setCellphone(int cellphone) {
+    public void setCellphone(long cellphone) {
         this.cellphone = cellphone;
     }
 

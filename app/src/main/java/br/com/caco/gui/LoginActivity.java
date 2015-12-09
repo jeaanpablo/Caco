@@ -2,7 +2,9 @@ package br.com.caco.gui;
 
 
 import br.com.caco.R;
+import br.com.caco.database.dao.FriendDAO;
 import br.com.caco.database.dao.UserDAO;
+import br.com.caco.model.Friend;
 import br.com.caco.model.User;
 import br.com.caco.util.Util;
 import br.com.caco.util.Validation;
@@ -35,8 +37,10 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -142,6 +146,7 @@ public class LoginActivity extends FragmentActivity{
                 if(newUser.getId() != 0)
                 {
                     UserDAO userDAO = new UserDAO(context);
+                    FriendDAO friendDAO = new FriendDAO(context);
 
                     Bitmap bitmap = getBitmapFromURL(newUser.getImagePath());
 
@@ -152,6 +157,15 @@ public class LoginActivity extends FragmentActivity{
                     }
 
                     userDAO.insertUser(newUser);
+
+                    List<Friend> friends = getFriendByUser(newUser);
+
+                    for(int i =0 ; i <friends.size() ; i++)
+                    {
+                        friendDAO.insertFriend(friends.get(i));
+                    }
+
+
                     startNewActivity = true;
                 }
 
@@ -292,6 +306,72 @@ public class LoginActivity extends FragmentActivity{
             Log.e("getBmpFromUrl error: ", e.getMessage().toString());
             return null;
         }
+    }
+
+
+    public List<Friend> getFriendByUser(User user) {
+        // Create a new HttpClient and Post Header
+
+        List<Friend> list = new ArrayList<Friend>();
+        String url = null;
+
+            url = "http://45.79.178.168:8080/Caco-webservice/getFriendsByUserId";
+
+
+
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost(url);
+
+        try {
+            // Add your data
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("id_user", "" + user.getId()));
+                nameValuePairs.add(new BasicNameValuePair("token", user.getToken()));
+
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            // Execute HTTP Post Request
+            HttpResponse response = httpclient.execute(httppost);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+
+            StringBuilder builder = new StringBuilder();
+            for (String line = null; (line = reader.readLine()) != null;) {
+                builder.append(line).append("\n");
+            }
+
+
+            JSONArray jsonArray = new JSONArray(builder.toString());
+
+            for(int i=0;i<jsonArray.length();i++) {
+                JSONObject lines = (JSONObject) new JSONTokener(jsonArray.getString(i)).nextValue();
+                Friend friend = new Friend();
+
+                friend.setName(lines.getString("name"));
+                friend.setIdUser(lines.getInt("idUser"));
+                friend.setImage(lines.getString("imgUrl"));
+                friend.setAdd(true);
+                friend.setAdd(false);
+
+
+
+                list.add(friend);
+
+            }
+
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            user = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            user = null;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            user = null;
+        }
+
+        return list;
     }
 
 

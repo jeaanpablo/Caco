@@ -195,8 +195,6 @@ public class ProfileActivity extends Activity {
 
             } else if (requestCode == CROP_PIC) {
 
-				userDao  = new UserDAO(this);
-
 				List<User> userList = userDao.getAll();
 
 				User user = userList.get(0);
@@ -211,6 +209,12 @@ public class ProfileActivity extends Activity {
 				user.setImageName(user.getId() + file.getName());
 
 				updateProfilePicture(this, user);
+
+                try {
+                    saveToInternalSorage(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 imageProfile.setImageBitmap(bitmap);
 
@@ -250,7 +254,7 @@ public class ProfileActivity extends Activity {
 			@Override
 			protected Void doInBackground(Void... params) {
 
-				getFriendByUser(user);
+				updateProfileImageUser(user);
 
 				return null;
 			}
@@ -267,7 +271,7 @@ public class ProfileActivity extends Activity {
 		}.execute();
 	}
 
-	public void getFriendByUser(User user) {
+	public void updateProfileImageUser(User user) {
 		// Create a new HttpClient and Post Header
 
 		HttpClient httpclient = new DefaultHttpClient();
