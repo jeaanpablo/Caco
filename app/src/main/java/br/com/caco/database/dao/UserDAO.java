@@ -34,6 +34,10 @@ public class  UserDAO {
         values.put("token", user.getToken());
         values.put("permission", user.getPermission());
         values.put("id_user", user.getId());
+        values.put("first_name", user.getFirstName());
+        values.put("last_name", user.getLastName());
+        values.put("cellphone", user.getCellphone());
+        values.put("img_path", user.getImagePath());
 
         database.insert(UserData.TABLE_NAME_USER, null, values);
         database.close();
@@ -43,7 +47,7 @@ public class  UserDAO {
     {
         List<User> users = new ArrayList<User>();
         SQLiteDatabase database = this.db.getReadableDatabase();
-        String[] FROM = {"_id", "token", "permission", "id_user"};
+        String[] FROM = {"_id", "token", "permission", "id_user", "first_name", "last_name", "img_path", "cellphone"};
 
         Cursor cursor = database.query(UserData.TABLE_NAME_USER, FROM, null, null, null, null, null);
 
@@ -57,6 +61,10 @@ public class  UserDAO {
             user.setToken(cursor.getString(cursor.getColumnIndex("token")));
             user.setPermission(cursor.getString(cursor.getColumnIndex("permission")));
             user.setId(cursor.getInt(cursor.getColumnIndex("id_user")));
+            user.setImagePath(cursor.getString(cursor.getColumnIndex("img_path")));
+            user.setFirstName(cursor.getString(cursor.getColumnIndex("first_name")));
+            user.setLastName(cursor.getString(cursor.getColumnIndex("last_name")));
+            user.setCellphone(cursor.getInt(cursor.getColumnIndex("cellphone")));
 
             database.close();
 

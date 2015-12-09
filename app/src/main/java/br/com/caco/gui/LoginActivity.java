@@ -10,10 +10,14 @@ import br.com.caco.util.Validation;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,8 +39,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,6 +142,15 @@ public class LoginActivity extends FragmentActivity{
                 if(newUser.getId() != 0)
                 {
                     UserDAO userDAO = new UserDAO(context);
+
+                    Bitmap bitmap = getBitmapFromURL(newUser.getImagePath());
+
+                    try {
+                        user.setImagePath(saveToInternalSorage(bitmap));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     userDAO.insertUser(newUser);
                     startNewActivity = true;
                 }
@@ -200,6 +218,11 @@ public class LoginActivity extends FragmentActivity{
                 user.setId(jsonObject.optInt("idUser"));
                 user.setToken(jsonObject.optString("token"));
                 user.setPermission(jsonObject.optString("permission"));
+                user.setFirstName(jsonObject.optString("firstName"));
+                user.setLastName(jsonObject.optString("lastName"));
+                user.setCellphone(jsonObject.optInt("cellphone"));
+                user.setImagePath(jsonObject.optString("imgUrl"));
+
             }
             else if (response.getStatusLine().getStatusCode() == HttpStatus.SC_NOT_FOUND)
             {
@@ -225,6 +248,50 @@ public class LoginActivity extends FragmentActivity{
         }
 
         return user;
+    }
+
+
+    private String saveToInternalSorage(Bitmap bitmapImage) throws IOException {
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,"profile.jpg");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            fos.close();
+        }
+        return mypath.getAbsolutePath();
+    }
+
+
+    public static Bitmap getBitmapFromURL(String link) {
+    /*--- this method downloads an Image from the given URL,
+     *  then decodes and returns a Bitmap object
+     ---*/
+        try {
+            URL url = new URL(link);
+            HttpURLConnection connection = (HttpURLConnection) url
+                    .openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+
+            return myBitmap;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("getBmpFromUrl error: ", e.getMessage().toString());
+            return null;
+        }
     }
 
 

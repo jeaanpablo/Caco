@@ -8,7 +8,7 @@ public class User {
     private String login;
     private Long cpf;
 	private String password;
-	private Long cellphone;
+	private int cellphone;
 	private String birthdate;
 	private String gender;
     private String email;
@@ -17,6 +17,15 @@ public class User {
     private String redId;
     private String image;
     private String imageName;
+    private String imagePath;
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
     public String getImage() {
         return image;
@@ -82,11 +91,11 @@ public class User {
         this.gender = gender;
     }
 
-    public Long getCellphone() {
+    public int getCellphone() {
         return cellphone;
     }
 
-    public void setCellphone(Long cellphone) {
+    public void setCellphone(int cellphone) {
         this.cellphone = cellphone;
     }
 

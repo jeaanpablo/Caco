@@ -21,7 +21,7 @@ public class UserData extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE "+TABLE_NAME_USER+"(_id integer primary key autoincrement, token text not null, permission text not null, id_user integer not null);");
+        db.execSQL("CREATE TABLE "+TABLE_NAME_USER+"(_id integer primary key autoincrement, token text not null, permission text not null, id_user integer not null, first_name text, last_name text, img_path text, cellphone number);");
         db.execSQL("CREATE TABLE "+TABLE_NAME_NOTIFICATION+"(_id integer primary key autoincrement, id_user_requester integer, name_user_requester text, img_path text, notif_type text, id_store integer, store_name text, id_approver integer);");
         db.execSQL("CREATE TABLE "+TABLE_NAME_FRIENDS+"(_id integer primary key autoincrement, id_user integer, name text, img_path text);");
 

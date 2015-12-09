@@ -3,6 +3,9 @@ package br.com.caco.gui;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -77,12 +81,29 @@ public class ProfileActivity extends Activity {
 		final ImageView btnEditCelular = (ImageView) findViewById(R.id.imageViewProfileCelular);
 		final ImageView btnEditFoto = (ImageView) findViewById(R.id.ImageViewProfileFotoEdit);
 
+        userDao  = new UserDAO(this);
+
+        List<User> userList = userDao.getAll();
+
+        final User user = userList.get(0);
+
+        ImageView imageProfile = (ImageView) findViewById(R.id.ImageViewProfileFoto);
+
+        loadImageFromStorage(user.getImagePath(), imageProfile);
+
+
+        final EditText editNome = (EditText) findViewById(R.id.editTextProfileNome);
+        editNome.setText(user.getFirstName()+" "+user.getLastName());
+
+        final EditText editCelular = (EditText) findViewById(R.id.editTextProfileCelular);
+        editCelular.setText(""+user.getCellphone());
+
 		btnEditNome.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
-				EditText editNome = (EditText) findViewById(R.id.editTextProfileNome);
+
 
 
 				if(editNome.isEnabled() == false)
@@ -104,7 +125,7 @@ public class ProfileActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				EditText editCelular = (EditText) findViewById(R.id.editTextProfileCelular);
+
 
 				if(editCelular.isEnabled() == false)
 				{
@@ -147,6 +168,8 @@ public class ProfileActivity extends Activity {
       //  if (requestCode == LOAD_IMAGE_RESULTS && resultCode == RESULT_OK && data != null)
         ImageView imageProfile = (ImageView) findViewById(R.id.ImageViewProfileFoto);
 
+
+
 		File file = new File(getFilesDir(), "profile.jpg");
 
         if (resultCode == RESULT_OK){
@@ -175,6 +198,7 @@ public class ProfileActivity extends Activity {
 				userDao  = new UserDAO(this);
 
 				List<User> userList = userDao.getAll();
+
 				User user = userList.get(0);
 
 				Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
@@ -184,11 +208,17 @@ public class ProfileActivity extends Activity {
 				String encodedImage = bitmapToString(bitmap);
 
 				user.setImage(encodedImage);
-				user.setImageName(file.getName());
+				user.setImageName(user.getId() + file.getName());
 
 				updateProfilePicture(this, user);
 
                 imageProfile.setImageBitmap(bitmap);
+
+                try {
+                    saveToInternalSorage(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
 
@@ -241,15 +271,13 @@ public class ProfileActivity extends Activity {
 		// Create a new HttpClient and Post Header
 
 		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost("http://45.79.178.168:8080/Caco-webservice/updateUserProfile");
+		HttpPost httppost = new HttpPost("http://45.79.178.168:8080/Caco-webservice/updateUserImageProfile");
 
 		try {
 			// Add your data
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("image", ""+user.getImage()));
 			nameValuePairs.add(new BasicNameValuePair("image_name", user.getImageName()));
-			nameValuePairs.add(new BasicNameValuePair("name", user.getFirstName()));
-			nameValuePairs.add(new BasicNameValuePair("phone", ""+user.getCellphone()));
 			nameValuePairs.add(new BasicNameValuePair("id_user", ""+user.getId()));
 
 
@@ -257,6 +285,8 @@ public class ProfileActivity extends Activity {
 
 			// Execute HTTP Post Request
 			HttpResponse response = httpclient.execute(httppost);
+
+			String string = response.getStatusLine().getReasonPhrase();
 
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
@@ -327,7 +357,41 @@ public class ProfileActivity extends Activity {
 	}
 
 
+    private void loadImageFromStorage(String path, ImageView img)
+    {
 
+        try {
+            File f=new File(path);
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            img.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    private String saveToInternalSorage(Bitmap bitmapImage) throws IOException {
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,"profile.jpg");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            fos.close();
+        }
+        return mypath.getAbsolutePath();
+    }
 
 
 }

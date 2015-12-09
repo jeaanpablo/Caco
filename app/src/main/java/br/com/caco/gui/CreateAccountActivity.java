@@ -112,7 +112,7 @@ public class CreateAccountActivity extends Activity{
                     } else {
                         user.setFirstName(name);
                     }
-                    user.setCellphone(Long.parseLong(editCelular.getText().toString()));
+                    user.setCellphone(Integer.parseInt(editCelular.getText().toString()));
                     user.setEmail(editEmail.getText().toString());
                     user.setGender(gender);
                     user.setBirthdate(dateStringToMillis(editAniversario.getText().toString()));
